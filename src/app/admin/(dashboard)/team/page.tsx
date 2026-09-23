@@ -40,7 +40,6 @@ export default async function TeamPage() {
               <RoleBadge role="super_admin" isOwner />
               {me.isOwner && <span className="text-xs text-muted">(you)</span>}
             </p>
-            <p className="text-sm text-muted">Default super admin · set with ADMIN_USERNAME / ADMIN_PASSWORD</p>
           </div>
           <span className="flex items-center gap-1.5 text-sm text-muted">
             <Lock className="h-4 w-4" /> Can&apos;t be removed
