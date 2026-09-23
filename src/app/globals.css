@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@theme {
+  --color-forest: #173f2a;
+  --color-forest-deep: #0f2c1d;
+  --color-leaf: #4f9a4d;
+  --color-leaf-light: #9fd08f;
+  --color-leaf-dark: #2f7a3c;
+  --color-cream: #f7f1e3;
+  --color-paper: #fbf8f1;
+  --color-sand: #ece3cf;
+  --color-kente: #e0a526;
+  --color-cayenne: #c2471b;
+  --color-ink: #1e2a22;
+  --color-muted: #5d6b61;
+
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+
+  --animate-marquee: marquee 38s linear infinite;
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* Kente-inspired stripe used as a section divider */
+.kente-stripe {
+  height: 10px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--color-kente) 0 28px,
+    var(--color-forest) 28px 36px,
+    var(--color-cayenne) 36px 52px,
+    var(--color-forest-deep) 52px 58px,
+    var(--color-leaf) 58px 84px,
+    var(--color-forest-deep) 84px 90px
+  );
+}
+
+/* Subtle leaf-grain texture for cream sections */
+.paper-grain {
+  background-color: var(--color-cream);
+  background-image:
+    radial-gradient(circle at 20% 20%, rgb(79 154 77 / 0.07) 0 2px, transparent 3px),
+    radial-gradient(circle at 70% 60%, rgb(224 165 38 / 0.08) 0 2px, transparent 3px);
+  background-size: 34px 34px, 46px 46px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-marquee { animation: none; }
+}
