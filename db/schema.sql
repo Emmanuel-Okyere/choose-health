@@ -72,3 +72,23 @@ CREATE TABLE IF NOT EXISTS admin_users (
 ALTER TABLE orders ADD COLUMN IF NOT EXISTS status_updated_at timestamptz;
 ALTER TABLE orders ADD COLUMN IF NOT EXISTS status_updated_by text;
 CREATE INDEX IF NOT EXISTS orders_status_idx ON orders(status);
+
+-- Product management (added after launch; safe to re-run).
+ALTER TABLE products ADD COLUMN IF NOT EXISTS details text;                    -- longer text for the product page
+ALTER TABLE products ADD COLUMN IF NOT EXISTS stock_quantity integer CHECK (stock_quantity IS NULL OR stock_quantity >= 0);  -- NULL = not counted
+ALTER TABLE products ADD COLUMN IF NOT EXISTS is_active boolean NOT NULL DEFAULT true;  -- false = hidden from the shop
+ALTER TABLE products ADD COLUMN IF NOT EXISTS updated_at timestamptz NOT NULL DEFAULT now();
+
+-- Product photos stored in the database. The first by sort_order is the main photo.
+CREATE TABLE IF NOT EXISTS product_images (
+  id            serial PRIMARY KEY,
+  product_id    integer NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+  data          bytea NOT NULL,
+  content_type  text NOT NULL CHECK (content_type IN ('image/jpeg', 'image/png', 'image/webp')),
+  byte_size     integer NOT NULL,
+  width         integer,
+  height        integer,
+  sort_order    integer NOT NULL DEFAULT 0,
+  created_at    timestamptz NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS product_images_product_idx ON product_images(product_id, sort_order, id);

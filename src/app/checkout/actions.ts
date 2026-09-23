@@ -17,6 +17,12 @@ export type PlaceOrderResult = { ok: true; code: string } | { ok: false; error: 
 
 const CODE_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"; // no 0/O/1/I/L confusion
 
+class OutOfStockError extends Error {
+  constructor(public productName: string) {
+    super(`Not enough stock for ${productName}`);
+  }
+}
+
 function newOrderCode() {
   let s = "";
   for (let i = 0; i < 5; i++) s += CODE_ALPHABET[randomInt(CODE_ALPHABET.length)];
@@ -48,7 +54,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   // Prices always come from the database, never from the browser.
   const products = await sql<{ id: number; slug: string; name: string; size: string | null; pricePesewas: number }[]>`
     SELECT id, slug, name, size, price_pesewas FROM products
-    WHERE slug IN ${sql([...wanted.keys()])} AND in_stock`;
+    WHERE slug IN ${sql([...wanted.keys()])} AND in_stock AND is_active`;
   if (products.length !== wanted.size)
     return { ok: false, error: "Some items are no longer available. Please refresh and try again." };
 
@@ -78,9 +84,19 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
               quantity: l.quantity,
             })),
           )}`;
+        // Take counted stock down. The WHERE clause makes this safe when two people buy the last one at once.
+        for (const l of lines) {
+          const updated = await tx`
+            UPDATE products SET stock_quantity = stock_quantity - ${l.quantity}
+            WHERE id = ${l.productId} AND (stock_quantity IS NULL OR stock_quantity >= ${l.quantity})`;
+          if (updated.count === 0) throw new OutOfStockError(l.name);
+        }
       });
       return { ok: true, code };
     } catch (err) {
+      if (err instanceof OutOfStockError) {
+        return { ok: false, error: `Sorry, we don't have enough ${err.productName} left. Please reduce the quantity or remove it.` };
+      }
       if ((err as { code?: string }).code === "23505") continue; // order code collision, retry
       console.error("placeOrder failed", err);
       return { ok: false, error: "Something went wrong saving your order. Please try again or order on WhatsApp." };

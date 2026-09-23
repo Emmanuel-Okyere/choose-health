@@ -61,6 +61,8 @@ Locally, `npm run db:seed` (without `--if-empty`) still resets the seed products
 | Home page sections | `src/app/page.tsx` |
 | Checkout + order server action | `src/app/checkout/` |
 | Orders list, filters & detail | `src/app/admin/(dashboard)/page.tsx`, `orders/[code]/`, queries in `src/lib/admin-orders.ts` |
+| Products & photos (admin) | `src/app/admin/(dashboard)/products/` (photos are resized in the browser, stored in `product_images`, served from `/media/[id]`) |
+| Product page | `src/app/products/[slug]/page.tsx` |
 | Excel export | `src/app/admin/(dashboard)/orders/export/route.ts` (uses the same filters as the list) |
 | Order dashboard & login | `src/app/admin/` (session logic in `src/lib/auth.ts`, redirects in `src/proxy.ts`) |
 | Logo | `src/components/Logo.tsx`, `src/app/icon.svg` |

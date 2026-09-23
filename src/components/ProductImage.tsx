@@ -5,6 +5,9 @@ const palettes: Record<string, { bg: string; dot: string }> = {
   spices: { bg: "from-[#f8e2c7] to-[#f0c79a]", dot: "#c2471b" },
   detox: { bg: "from-[#e3e7e0] to-[#c9d1c5]", dot: "#1e2a22" },
   balms: { bg: "from-[#e1eef3] to-[#c5dde7]", dot: "#2b6b87" },
+  "herbs-teas": { bg: "from-[#e4efd9] to-[#c9dfb4]", dot: "#2f7a3c" },
+  oils: { bg: "from-[#f7efcf] to-[#ecd98f]", dot: "#a07a12" },
+  other: { bg: "from-[#ece3cf] to-[#ddd0b3]", dot: "#5d6b61" },
 };
 
 type Props = { src: string | null; name: string; category: string; className?: string; sizes?: string; label?: boolean };

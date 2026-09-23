@@ -1,22 +1,18 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { Check, Flame, Nut, Plus } from "lucide-react";
 import { useCart } from "./cart/CartProvider";
 import { ProductImage } from "./ProductImage";
 import { cedis } from "@/lib/format";
 import type { Product } from "@/lib/queries";
-
-const filters = [
-  { key: "all", label: "All" },
-  { key: "spices", label: "Spices" },
-  { key: "detox", label: "Detox" },
-  { key: "balms", label: "Balms & rubs" },
-  { key: "nuts-seeds", label: "Nuts & seeds" },
-];
+import { CATEGORIES } from "@/lib/categories";
 
 export function ProductCatalog({ products }: { products: Product[] }) {
   const [filter, setFilter] = useState("all");
+  // Only show categories that currently have products.
+  const filters = [{ key: "all", label: "All" }, ...CATEGORIES.filter((c) => products.some((p) => p.category === c.key))];
   const visible = filter === "all" ? products : products.filter((p) => p.category === filter);
 
   return (
@@ -51,7 +47,7 @@ export function ProductCatalog({ products }: { products: Product[] }) {
   );
 }
 
-function ProductCard({ product: p }: { product: Product }) {
+export function ProductCard({ product: p }: { product: Product }) {
   const { add } = useCart();
   const [added, setAdded] = useState(false);
 
@@ -70,8 +66,8 @@ function ProductCard({ product: p }: { product: Product }) {
   }
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-2xl border border-sand bg-white transition hover:-translate-y-0.5 hover:shadow-lg sm:rounded-3xl">
-      <div className="relative">
+    <article className="group relative flex flex-col overflow-hidden rounded-2xl border border-sand bg-white transition hover:-translate-y-0.5 hover:shadow-lg sm:rounded-3xl">
+      <Link href={`/products/${p.slug}`} className="relative block" aria-label={`${p.name}, view details`}>
         <ProductImage
           src={p.image}
           name={p.name}
@@ -93,12 +89,21 @@ function ProductCard({ product: p }: { product: Product }) {
             {p.badge}
           </span>
         )}
-      </div>
+        {!p.inStock && (
+          <span className="absolute inset-x-0 bottom-0 bg-forest-deep/75 py-1 text-center text-[11px] font-bold uppercase tracking-wider text-white">
+            Sold out
+          </span>
+        )}
+      </Link>
       <div className="flex flex-1 flex-col p-2.5 min-[360px]:p-3 sm:p-5">
         <p className="truncate text-[10px] font-semibold uppercase tracking-widest text-leaf-dark sm:text-xs">
           {[p.brand, p.size].filter(Boolean).join(" · ")}
         </p>
-        <h3 className="mt-0.5 font-display text-[15px] font-semibold leading-snug text-forest sm:mt-1 sm:text-xl">{p.name}</h3>
+        <h3 className="mt-0.5 font-display text-[15px] font-semibold leading-snug text-forest sm:mt-1 sm:text-xl">
+          <Link href={`/products/${p.slug}`} className="hover:underline">
+            {p.name}
+          </Link>
+        </h3>
         <p className="mt-2 hidden text-sm leading-relaxed text-muted sm:line-clamp-3">{p.description}</p>
         <div className="mt-auto flex items-center justify-between gap-1.5 pt-2 min-[360px]:gap-2 sm:pt-5 lg:flex-col lg:items-stretch lg:gap-3">
           <span className="whitespace-nowrap font-display text-[15px] font-semibold min-[360px]:text-base sm:text-xl">{cedis(p.pricePesewas)}</span>

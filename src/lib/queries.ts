@@ -10,11 +10,24 @@ export type Product = {
   size: string | null;
   category: string;
   pricePesewas: number;
-  image: string | null;
+  image: string | null; // main photo URL
   badge: string | null;
-  inStock: boolean;
+  inStock: boolean; // false when switched off or the counted stock has run out
+  stockQuantity: number | null; // null = not counted
   wholesale: boolean;
 };
+
+export type ProductDetail = Product & { details: string | null; images: string[] };
+
+export const imageUrl = (id: number) => `/media/${id}`;
+
+// Main photo: the first uploaded photo, else the legacy static path on the product row.
+const productColumns = sql`
+  p.id, p.slug, p.name, p.brand, p.description, p.size, p.category, p.price_pesewas, p.badge,
+  p.wholesale, p.stock_quantity,
+  (p.in_stock AND (p.stock_quantity IS NULL OR p.stock_quantity > 0)) AS in_stock,
+  COALESCE((SELECT '/media/' || i.id FROM product_images i WHERE i.product_id = p.id
+            ORDER BY i.sort_order, i.id LIMIT 1), p.image) AS image`;
 
 export type Post = {
   id: number;
@@ -46,9 +59,25 @@ export type Order = {
 
 export async function getProducts() {
   return sql<Product[]>`
-    SELECT id, slug, name, brand, description, size, category, price_pesewas, image,
-           badge, in_stock, wholesale
-    FROM products ORDER BY sort_order, id`;
+    SELECT ${productColumns} FROM products p WHERE p.is_active ORDER BY p.sort_order, p.id`;
+}
+
+export async function getProductBySlug(slug: string) {
+  const [product] = await sql<(Product & { details: string | null; imageIds: number[] })[]>`
+    SELECT ${productColumns}, p.details,
+      COALESCE((SELECT array_agg(i.id ORDER BY i.sort_order, i.id) FROM product_images i WHERE i.product_id = p.id), '{}') AS image_ids
+    FROM products p WHERE p.slug = ${slug} AND p.is_active`;
+  if (!product) return null;
+  const { imageIds, ...rest } = product;
+  const images = imageIds.length ? imageIds.map(imageUrl) : product.image ? [product.image] : [];
+  return { ...rest, images } satisfies ProductDetail;
+}
+
+export async function getRelatedProducts(product: Pick<Product, "id" | "category">, limit = 4) {
+  return sql<Product[]>`
+    SELECT ${productColumns} FROM products p
+    WHERE p.is_active AND p.id <> ${product.id}
+    ORDER BY (p.category = ${product.category}) DESC, p.sort_order, p.id LIMIT ${limit}`;
 }
 
 export async function getPosts() {

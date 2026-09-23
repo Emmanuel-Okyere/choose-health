@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import postgres from "postgres";
 
 if (!process.env.DATABASE_URL) {
@@ -204,7 +206,32 @@ Turmeric can affect blood thinners and diabetes medicine. If you take medicine e
 async function main() {
   if (await shouldSeed("products")) await seedProducts();
   if (await shouldSeed("posts")) await seedPosts();
+  await moveStaticImagesIntoDb();
   await sql.end();
+}
+
+// Older products point at a file in /public. Copy those into product_images so every photo
+// can be managed from the admin. Only touches products that have no uploaded photos yet.
+async function moveStaticImagesIntoDb() {
+  const rows = await sql<{ id: number; image: string }[]>`
+    SELECT p.id, p.image FROM products p
+    WHERE p.image LIKE '/images/%'
+      AND NOT EXISTS (SELECT 1 FROM product_images i WHERE i.product_id = p.id)`;
+  for (const row of rows) {
+    const ext = row.image.split(".").pop()?.toLowerCase();
+    const type = ext === "png" ? "image/png" : ext === "webp" ? "image/webp" : "image/jpeg";
+    try {
+      const data = await readFile(join(process.cwd(), "public", row.image));
+      await sql.begin(async (tx) => {
+        await tx`INSERT INTO product_images (product_id, data, content_type, byte_size)
+                 VALUES (${row.id}, ${data}, ${type}, ${data.length})`;
+        await tx`UPDATE products SET image = NULL WHERE id = ${row.id}`;
+      });
+    } catch (err) {
+      console.warn(`• Could not copy ${row.image}: ${(err as Error).message}`);
+    }
+  }
+  if (rows.length) console.log(`✓ Moved ${rows.length} product photos into the database`);
 }
 
 async function seedProducts() {
