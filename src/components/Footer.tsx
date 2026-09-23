@@ -12,7 +12,7 @@ export function Footer() {
           <Logo inverted />
           <p className="mt-3 max-w-sm font-display text-xl italic text-cream md:mt-4 md:text-2xl">{site.tagline}.</p>
           <p className="mt-3 hidden max-w-sm text-sm leading-relaxed text-cream/70 md:block">
-            {site.legalName} — natural remedies, wholesome foods and naturopathic care in the heart of Awoshie, Accra.
+            {site.legalName}. Natural remedies and naturopathic care in Awoshie, Accra.
           </p>
           <p className="mt-3 text-xs text-leaf-light md:mt-5 md:text-sm">#naturalremedy #Restocked #HealthyFoods</p>
         </div>
@@ -58,7 +58,7 @@ export function Footer() {
             </a>
           ))}
           <p className="flex gap-2.5">
-            <Clock className="h-4 w-4 shrink-0 text-leaf-light" /> Mon – Thu, 9am – 5pm
+            <Clock className="h-4 w-4 shrink-0 text-leaf-light" /> Mon-Thu, 9am-5pm
           </p>
           <nav className="flex flex-wrap gap-x-4 gap-y-1 pt-2 text-cream/70">
             <Link href="/#shop" className="hover:text-white">Shop</Link>

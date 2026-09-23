@@ -20,7 +20,7 @@ export function CartDrawer() {
 
   const waMessage =
     "Hello Natural Health Retreat, I'd like to order:\n" +
-    items.map((i) => `• ${i.quantity} × ${i.name}${i.size ? ` (${i.size})` : ""}`).join("\n") +
+    items.map((i) => `- ${i.quantity} x ${i.name}${i.size ? ` (${i.size})` : ""}`).join("\n") +
     `\nSubtotal: ${cedis(subtotal)}`;
 
   return (

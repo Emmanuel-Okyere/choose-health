@@ -45,7 +45,7 @@ export default async function PostPage(props: PageProps<"/remedies/[slug]">) {
 
         <div className="mt-8 rounded-2xl bg-forest p-5 text-cream md:mt-10 md:rounded-3xl md:p-8">
           <h2 className="font-display text-2xl font-semibold">Want personal advice?</h2>
-          <p className="mt-2 text-cream/75">Book a consultation with {site.doctor.name} — in person in Awoshie or over WhatsApp.</p>
+          <p className="mt-2 text-cream/75">Book a consultation with {site.doctor.name} in Awoshie or on WhatsApp.</p>
           <a
             href={whatsappLink(`Hello! I read "${post.title}" and would like to book a consultation.`)}
             target="_blank"

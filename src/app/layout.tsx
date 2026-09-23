@@ -15,12 +15,12 @@ const dmSans = DM_Sans({ variable: "--font-dm-sans", subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL(`https://${site.domain}`),
   title: {
-    default: `${site.name} — ${site.tagline}`,
+    default: `${site.name} | ${site.tagline}`,
     template: `%s · ${site.name}`,
   },
   description: site.description,
   openGraph: {
-    title: `${site.name} — ${site.tagline}`,
+    title: `${site.name} | ${site.tagline}`,
     description: site.description,
     images: ["/images/nd-william-owusu.jpg"],
     locale: "en_GH",

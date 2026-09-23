@@ -1,6 +1,6 @@
 type Props = { className?: string; showWordmark?: boolean; inverted?: boolean; compact?: boolean };
 
-// Mark: a retreat "home" whose doorway is a sprouting leaf — healing that starts at home.
+// Mark: a retreat "home" whose doorway is a sprouting leaf, i.e. healing that starts at home.
 export function LogoMark({ className = "h-10 w-10" }: { className?: string }) {
   return (
     <svg viewBox="0 0 48 48" className={className} aria-hidden="true">

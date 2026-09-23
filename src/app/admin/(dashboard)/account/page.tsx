@@ -22,8 +22,8 @@ export default async function AccountPage() {
           <p className="text-sm leading-relaxed text-muted">
             You&apos;re signed in as the owner. Your username and password come from the{" "}
             <code className="rounded bg-sand px-1">ADMIN_USERNAME</code> and{" "}
-            <code className="rounded bg-sand px-1">ADMIN_PASSWORD</code> environment variables. Change them in Vercel →
-            Settings → Environment Variables, then redeploy. Changing ADMIN_PASSWORD signs every admin out unless{" "}
+            <code className="rounded bg-sand px-1">ADMIN_PASSWORD</code> environment variables. To change them, open your project in Vercel, go to Settings, then
+            Environment Variables, and redeploy. Changing ADMIN_PASSWORD signs every admin out unless{" "}
             <code className="rounded bg-sand px-1">AUTH_SECRET</code> is set.
           </p>
         ) : (

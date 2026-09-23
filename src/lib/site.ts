@@ -5,7 +5,7 @@ export const site = {
   tagline: "Choose Health, Choose Life",
   domain: "choosehealth.com.gh",
   description:
-    "100% natural health products, herbal remedies and naturopathic care in Awoshie, Accra. Shop spices, detox powders, nuts & seeds — pickup or delivery.",
+    "Natural health products, herbal remedies and naturopathic care in Awoshie, Accra. Order spices, detox powders, nuts and seeds for pickup or delivery.",
   doctor: {
     name: "ND William Owusu",
     title: "Lead Naturopathic Physician",
@@ -26,8 +26,8 @@ export const site = {
     mapQuery: "Vision School, Awoshie, Accra, Ghana",
   },
   hours: [
-    { days: "Monday – Thursday", time: "9:00am – 5:00pm" },
-    { days: "Friday – Sunday", time: "Closed (WhatsApp orders welcome)" },
+    { days: "Monday to Thursday", time: "9am to 5pm" },
+    { days: "Friday to Sunday", time: "Closed, but you can still order on WhatsApp" },
   ],
   // TODO(owner): confirm the account name exactly as it appears on the MTN MoMo prompt.
   momo: {
@@ -42,7 +42,7 @@ export function whatsappLink(message?: string, number: string = site.whatsapp.nu
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 }
 
-/** Converts a local Ghanaian number (024…) or +233… to the digits-only form wa.me expects. */
+/** Converts a local Ghanaian number (024...) or +233... to the digits-only form wa.me expects. */
 export function toWhatsAppNumber(phone: string) {
   const digits = phone.replace(/\D/g, "");
   return digits.startsWith("0") ? `233${digits.slice(1)}` : digits;

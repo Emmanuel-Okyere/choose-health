@@ -41,7 +41,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       // eslint-disable-next-line react-hooks/set-state-in-effect -- restoring persisted cart after mount
       if (saved) setItems(JSON.parse(saved));
     } catch {
-      // Storage unavailable (private mode etc.) — start with an empty cart.
+      // Storage unavailable (private mode etc.), so start with an empty cart.
     }
     setHydrated(true);
   }, []);

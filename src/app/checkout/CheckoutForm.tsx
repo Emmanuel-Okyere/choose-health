@@ -72,7 +72,7 @@ export function CheckoutForm() {
           <ul className="space-y-2 border-t border-cream/15 px-4 py-3 text-sm">
             {items.map((i) => (
               <li key={i.slug} className="flex justify-between gap-3">
-                <span className="text-cream/85">{i.quantity} × {i.name}</span>
+                <span className="text-cream/85">{i.quantity} x {i.name}</span>
                 <span className="whitespace-nowrap font-semibold">{cedis(i.quantity * i.pricePesewas)}</span>
               </li>
             ))}
@@ -98,7 +98,7 @@ export function CheckoutForm() {
           <legend className="sr-only">Pickup or delivery</legend>
           <h2 className="font-display text-lg font-semibold text-forest md:text-2xl">Pickup or delivery?</h2>
           <div className="mt-3 grid grid-cols-2 gap-2 md:mt-5 md:gap-3">
-            <Choice checked={fulfilment === "pickup"} onSelect={() => setFulfilment("pickup")} icon={Store} title="Pickup — free" text={`${site.address.line1}, Mon–Thu 9–5`} />
+            <Choice checked={fulfilment === "pickup"} onSelect={() => setFulfilment("pickup")} icon={Store} title="Pickup (free)" text={`${site.address.line1}, Mon-Thu 9-5`} />
             <Choice checked={fulfilment === "delivery"} onSelect={() => setFulfilment("delivery")} icon={Truck} title="Delivery" text="Fee confirmed on WhatsApp" />
           </div>
           {fulfilment === "delivery" ? (
@@ -136,7 +136,7 @@ export function CheckoutForm() {
               <div className="flex-1 text-sm">
                 <p className="font-semibold">{i.name}</p>
                 <p className="text-cream/65">
-                  {i.quantity} × {cedis(i.pricePesewas)}
+                  {i.quantity} x {cedis(i.pricePesewas)}
                 </p>
               </div>
               <span className="text-sm font-semibold">{cedis(i.quantity * i.pricePesewas)}</span>

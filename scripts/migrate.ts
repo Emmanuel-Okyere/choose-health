@@ -3,7 +3,7 @@ import { join } from "node:path";
 import postgres from "postgres";
 
 if (!process.env.DATABASE_URL) {
-  console.error("✗ DATABASE_URL is not set. Add it in Vercel → Settings → Environment Variables (or .env.local locally).");
+  console.error("✗ DATABASE_URL is not set. Add it in Vercel under Settings, Environment Variables (or .env.local locally).");
   process.exit(1);
 }
 

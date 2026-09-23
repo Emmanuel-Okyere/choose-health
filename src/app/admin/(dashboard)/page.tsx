@@ -55,7 +55,7 @@ export default async function OrdersPage(props: PageProps<"/admin">) {
       {/* At-a-glance numbers */}
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         {[
-          { label: "New — needs attention", value: String(stats.newCount), accent: stats.newCount > 0 },
+          { label: "New orders", value: String(stats.newCount), accent: stats.newCount > 0 },
           { label: "Open orders", value: String(stats.openCount) },
           { label: `Today · ${stats.todayCount} order${stats.todayCount === 1 ? "" : "s"}`, value: cedis(stats.todayValue) },
           { label: `This month · ${stats.monthCount} orders`, value: cedis(stats.monthValue) },
@@ -163,8 +163,8 @@ export default async function OrdersPage(props: PageProps<"/admin">) {
                       <p className="text-xs text-muted">{o.phone}</p>
                     </td>
                     <td className="max-w-[16rem] px-4 py-3">
-                      <p className="truncate" title={o.items.map((i) => `${i.quantity} × ${i.name}`).join(", ")}>
-                        {o.items.map((i) => `${i.quantity}× ${i.name}`).join(", ")}
+                      <p className="truncate" title={o.items.map((i) => `${i.quantity} x ${i.name}`).join(", ")}>
+                        {o.items.map((i) => `${i.quantity} x ${i.name}`).join(", ")}
                       </p>
                       <p className="text-xs text-muted">{o.itemCount} item{o.itemCount === 1 ? "" : "s"}</p>
                     </td>
@@ -203,7 +203,7 @@ export default async function OrdersPage(props: PageProps<"/admin">) {
         {total > 0 && (
           <div className="flex items-center justify-between gap-3 border-t border-sand px-4 py-3 text-sm">
             <p className="text-muted">
-              Showing <strong className="text-ink">{start}–{end}</strong> of <strong className="text-ink">{total}</strong>
+              Showing <strong className="text-ink">{start}-{end}</strong> of <strong className="text-ink">{total}</strong>
             </p>
             <div className="flex items-center gap-1">
               <PageLink href={f.page > 1 ? `/admin${filtersToQuery(f, { page: f.page - 1 })}` : null} label="Previous page">

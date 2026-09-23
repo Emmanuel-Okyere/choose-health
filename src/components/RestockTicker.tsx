@@ -10,7 +10,7 @@ const items: { icon: LucideIcon; text: string }[] = [
   { icon: Leaf, text: "Black Pepper" },
   { icon: Nut, text: "All nuts & seeds available wholesale" },
   { icon: MapPin, text: "Pickup at Awoshie Lane 14" },
-  { icon: Clock, text: "Mon – Thu, 9am – 5pm" },
+  { icon: Clock, text: "Mon-Thu, 9am-5pm" },
 ];
 
 export function RestockTicker() {

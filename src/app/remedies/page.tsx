@@ -6,8 +6,8 @@ import { shortDate } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
-  title: "Remedies & wisdom",
-  description: "Gentle, practical guidance on piles, skin conditions, kitchen remedies, prayer and whole-person health.",
+  title: "Remedies",
+  description: "Natural advice on piles, skin problems, kitchen remedies, prayer and rest from ND William Owusu.",
 };
 
 export default async function RemediesPage() {
@@ -16,10 +16,10 @@ export default async function RemediesPage() {
     <main className="flex-1">
       <section className="paper-grain">
         <div className="mx-auto max-w-4xl px-4 py-8 text-center sm:px-6 md:py-16">
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-leaf-dark">The retreat journal</p>
-          <h1 className="mt-2 font-display text-4xl font-semibold tracking-tight text-forest sm:text-6xl md:mt-3">Remedies & wisdom</h1>
+          <p className="text-sm font-bold uppercase tracking-[0.2em] text-leaf-dark">Health tips</p>
+          <h1 className="mt-2 font-display text-4xl font-semibold tracking-tight text-forest sm:text-6xl md:mt-3">Remedies</h1>
           <p className="mx-auto mt-3 max-w-xl text-[15px] text-muted md:mt-4 md:text-lg">
-            Natural approaches to everyday health — for the body, the mind and the spirit.
+            Simple, natural advice for common health problems.
           </p>
         </div>
         <div className="kente-stripe" />

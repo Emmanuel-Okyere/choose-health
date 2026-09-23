@@ -39,7 +39,7 @@ export default async function OrderDetailPage(props: PageProps<"/admin/orders/[c
       label: "Ready",
       text:
         order.fulfilment === "pickup"
-          ? `Hello ${firstName}, your order ${order.code} is ready for pickup at Awoshie Lane 14, near Vision School (Mon–Thu, 9am–5pm).`
+          ? `Hello ${firstName}, your order ${order.code} is ready for pickup at Awoshie Lane 14, near Vision School (Mon-Thu, 9am-5pm).`
           : `Hello ${firstName}, your order ${order.code} is on its way to you.`,
     },
   ];

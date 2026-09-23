@@ -27,7 +27,7 @@ export async function createAdmin(_prev: TeamActionState, formData: FormData): P
   const role = String(formData.get("role")) as AdminRole;
 
   if (!USERNAME_RE.test(username))
-    return { error: "Username must be 3–32 characters: letters, numbers, dots, dashes or underscores." };
+    return { error: "Username must be 3 to 32 characters: letters, numbers, dots, dashes or underscores." };
   if (username === ownerUsername()) return { error: "That username is reserved for the owner account." };
   if (name.length < 2 || name.length > 60) return { error: "Please enter the person's name." };
   if (password.length < MIN_PASSWORD_LENGTH)
@@ -43,7 +43,7 @@ export async function createAdmin(_prev: TeamActionState, formData: FormData): P
     throw err;
   }
   revalidatePath("/admin/team");
-  return { success: `${name} can now sign in as “${username}”.` };
+  return { success: `${name} can now sign in as "${username}".` };
 }
 
 export async function changeRole(_prev: TeamActionState, formData: FormData): Promise<TeamActionState> {
@@ -64,7 +64,7 @@ export async function resetPassword(_prev: TeamActionState, formData: FormData):
   const id = targetId(formData);
   const password = String(formData.get("password") ?? "");
   if (!id) return { error: "Invalid request." };
-  if (String(id) === me.id) return { error: "Use “My account” to change your own password." };
+  if (String(id) === me.id) return { error: "Use My account to change your own password." };
   if (password.length < MIN_PASSWORD_LENGTH)
     return { error: `Password must be at least ${MIN_PASSWORD_LENGTH} characters.` };
 

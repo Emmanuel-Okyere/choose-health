@@ -17,7 +17,7 @@ export default async function OrderPage(props: PageProps<"/order/[code]">) {
 
   const waMessage =
     `Hello! I just placed order ${order.code} on the website.\n` +
-    order.items.map((i) => `• ${i.quantity} × ${i.name}`).join("\n") +
+    order.items.map((i) => `- ${i.quantity} x ${i.name}`).join("\n") +
     `\nTotal: ${cedis(order.subtotalPesewas)}\n` +
     (order.paymentMethod === "momo" ? "I'll send the MoMo payment screenshot here." : "I'll pay cash.");
 
@@ -36,7 +36,7 @@ export default async function OrderPage(props: PageProps<"/order/[code]">) {
             {order.items.map((i) => (
               <li key={i.name} className="flex justify-between py-3">
                 <span>
-                  {i.quantity} × {i.name}
+                  {i.quantity} x {i.name}
                 </span>
                 <span className="font-semibold">{cedis(i.quantity * i.unitPricePesewas)}</span>
               </li>
@@ -68,7 +68,7 @@ export default async function OrderPage(props: PageProps<"/order/[code]">) {
           <p className="mt-6 flex items-center justify-center gap-2 text-sm text-muted">
             <MapPin className="h-4 w-4 text-cayenne" />
             {order.fulfilment === "pickup"
-              ? `Pickup: ${site.address.line1}, ${site.address.line2} · Mon–Thu 9–5`
+              ? `Pickup: ${site.address.line1}, ${site.address.line2} (Mon-Thu, 9am-5pm)`
               : `Delivery to: ${order.address}`}
           </p>
 

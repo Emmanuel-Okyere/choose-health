@@ -38,7 +38,7 @@ function addTotalRow(ws: ExcelJS.Worksheet, labelCol: string, sumCols: string[],
 
 function describeFilters(f: OrderFilters) {
   const parts = [`Status: ${f.status === "open" ? "Open (new, paid, ready)" : f.status === "all" ? "All" : label[f.status]}`];
-  if (f.from || f.to) parts.push(`Dates: ${f.from || "…"} to ${f.to || "…"}`);
+  if (f.from || f.to) parts.push(`Dates: ${f.from || "any"} to ${f.to || "any"}`);
   if (f.q) parts.push(`Search: "${f.q}"`);
   if (f.fulfilment) parts.push(`Fulfilment: ${f.fulfilment}`);
   if (f.payment) parts.push(`Payment: ${f.payment === "momo" ? "MoMo" : "Cash"}`);
@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
   wb.creator = `${site.name} admin (@${me.username})`;
   wb.created = new Date();
 
-  // Sheet 1 — one row per order
+  // Sheet 1: one row per order
   const ws = wb.addWorksheet("Orders");
   ws.columns = [
     { header: "Order #", key: "code", width: 12 },
@@ -84,7 +84,7 @@ export async function GET(request: NextRequest) {
       fulfilment: o.fulfilment === "pickup" ? "Pickup" : "Delivery",
       address: o.address ?? "",
       payment: o.paymentMethod === "momo" ? "MoMo" : "Cash",
-      items: o.items.map((i) => `${i.quantity} × ${i.name}`).join(", "),
+      items: o.items.map((i) => `${i.quantity} x ${i.name}`).join(", "),
       qty: o.itemCount,
       subtotal: toCedis(o.subtotalPesewas),
       note: o.note ?? "",
@@ -96,7 +96,7 @@ export async function GET(request: NextRequest) {
   addTotalRow(ws, "customer", ["qty", "subtotal"], orders.length + 1);
   ws.getColumn("items").alignment = { wrapText: true, vertical: "top" };
 
-  // Sheet 2 — one row per product line, handy for pivot tables (what sells best, etc.)
+  // Sheet 2: one row per product line, handy for pivot tables (what sells best, etc.)
   const wi = wb.addWorksheet("Order items");
   wi.columns = [
     { header: "Order #", key: "code", width: 12 },
@@ -127,7 +127,7 @@ export async function GET(request: NextRequest) {
   styleHeader(wi);
   addTotalRow(wi, "product", ["qty", "total"], lines + 1);
 
-  // Sheet 3 — what this file contains
+  // Sheet 3: what this file contains
   const info = wb.addWorksheet("About this export");
   info.columns = [{ width: 18 }, { width: 70 }];
   info.addRows([

@@ -36,7 +36,7 @@ export function ContactWhatsApp() {
     setMessage(topics.find((t) => t.key === key)!.message);
   }
 
-  const fullMessage = name.trim() ? `${message}\n\n— ${name.trim()}` : message;
+  const fullMessage = name.trim() ? `${message}\n\nName: ${name.trim()}` : message;
 
   return (
     <div className="rounded-2xl bg-white p-4 shadow-xl ring-1 ring-sand sm:p-10 md:rounded-[2rem]">

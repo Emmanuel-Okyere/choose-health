@@ -24,7 +24,7 @@ export default async function Home() {
           <SectionHeading
             eyebrow="The shop"
             title="Fresh on the shelf"
-            intro="Hand-picked spices, detox powders, balms, nuts and seeds. Add to your basket and pay with Mobile Money or cash at pickup."
+            intro="Spices, detox powders, balms, nuts and seeds. Add what you need to your basket and pay with Mobile Money, or cash when you pick up."
           />
           <ProductCatalog products={products} />
         </div>
@@ -37,9 +37,9 @@ export default async function Home() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="flex items-end justify-between gap-4">
             <SectionHeading
-              eyebrow="Remedies & wisdom"
-              title="From the retreat journal"
-              intro="Practical, gentle guidance on everyday health — body, mind and spirit."
+              eyebrow="Remedies"
+              title="Health tips from the retreat"
+              intro="Simple advice for common health problems, written by ND William Owusu."
             />
             <Link href="/remedies" className="mb-5 inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-leaf-dark transition-all hover:gap-2.5 md:mb-10 md:text-base">
               See all <ArrowRight className="h-4 w-4" />
@@ -74,7 +74,7 @@ export default async function Home() {
           <SectionHeading
             eyebrow="Contact us"
             title="Questions? Just ask."
-            intro="Consultations, product questions, wholesale or delivery — send us a message and we'll reply on WhatsApp, usually the same day (Mon–Thu)."
+            intro="Ask about a consultation, a product, wholesale prices or delivery. We reply on WhatsApp, usually the same day (Mon-Thu)."
           />
           <ContactWhatsApp />
         </div>
@@ -111,8 +111,8 @@ function Hero() {
             <span className="italic text-leaf-dark">Choose Life.</span>
           </h1>
           <p className="mt-3 max-w-lg text-[15px] leading-relaxed text-ink/75 md:mt-6 md:text-lg">
-            Natural remedies, pure spices and wholesome nuts & seeds — hand-picked by naturopath{" "}
-            <strong className="text-forest">{site.doctor.name}</strong> and ready for pickup in Awoshie, Accra.
+            Natural remedies, spices, nuts and seeds chosen by naturopath{" "}
+            <strong className="text-forest">{site.doctor.name}</strong>. Order online and pick up in Awoshie, Accra.
           </p>
 
           {/* Phone-only doctor card (the big portrait is desktop-only) */}
@@ -122,7 +122,7 @@ function Hero() {
             </div>
             <div className="min-w-0 flex-1">
               <p className="truncate font-display font-semibold text-forest">{site.doctor.name}</p>
-              <p className="text-xs text-muted">Lead naturopath · Mon–Thu 9–5</p>
+              <p className="text-xs text-muted">Lead naturopath · Mon-Thu, 9-5</p>
             </div>
             <span className="flex items-center gap-1 rounded-full bg-cayenne px-2 py-1 text-[10px] font-bold uppercase text-white">
               <Flame className="h-3 w-3" /> New stock
@@ -167,7 +167,7 @@ function Hero() {
             <p className="text-xs text-white/85">Cayenne · Turmeric · Charcoal</p>
           </div>
           <div className="absolute -bottom-5 right-6 flex items-center gap-2 rounded-full bg-forest px-4 py-2 text-sm text-cream shadow-lg">
-            <Clock className="h-4 w-4 text-kente" /> Mon–Thu · 9–5
+            <Clock className="h-4 w-4 text-kente" /> Mon-Thu, 9-5
           </div>
         </div>
       </div>
@@ -178,7 +178,7 @@ function Hero() {
 
 function TrustStrip() {
   const items = [
-    { icon: Leaf, title: "Natural goodness", text: "Pure spices, powders, nuts & seeds" },
+    { icon: Leaf, title: "Natural products", text: "Spices, powders, nuts and seeds" },
     { icon: BadgeCheck, title: "Trusted brands", text: "Badia, Aman-Rock, Skinner's & more" },
     { icon: Smartphone, title: "MoMo accepted", text: "Or pay cash when you pick up" },
     { icon: Truck, title: "Pickup & delivery", text: "Collect in Awoshie or we send it" },
@@ -215,11 +215,11 @@ function Wholesale() {
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-kente md:text-sm">Wholesale & bulk</p>
             <h2 className="mt-2 font-display text-2xl font-semibold leading-tight md:mt-3 md:text-5xl">
-              All nuts & seeds, available in bulk.
+              All nuts and seeds are available in bulk.
             </h2>
             <p className="mt-2 max-w-lg text-sm text-cream/75 md:mt-4 md:text-lg">
-              Stocking a shop, running a juice bar, or feeding a big family? Ask for our wholesale price list —
-              we&apos;ll reply on WhatsApp.
+              Stocking a shop, running a juice bar or feeding a big family? Ask for our wholesale price list and
+              we&apos;ll send it on WhatsApp.
             </p>
           </div>
           <ul className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5 md:mx-0 md:flex-wrap md:gap-2.5 md:overflow-visible md:px-0">
@@ -272,15 +272,15 @@ function About() {
             </div>
           </div>
           <p className="mt-4 text-[15px] leading-relaxed text-ink/75 md:mt-6 md:text-lg">
-            At the Natural Health Retreat Reform Center we believe healing starts at home — on your plate, in your
-            daily habits and in a peaceful heart. ND William Owusu combines naturopathic care, nutrition and
-            prayerful support to help families across Accra live well, naturally.
+            At the Natural Health Retreat Reform Center we believe good health starts at home, with what you eat and
+            how you live each day. ND William Owusu uses naturopathic care, nutrition advice and prayer to help
+            families across Accra stay well.
           </p>
           <div className="mt-5 grid grid-cols-3 gap-2 border-t border-sand pt-5 text-center md:mt-8 md:gap-4 md:pt-8">
             {[
               ["Consultations", "Book on WhatsApp"],
-              ["Remedies", "Herbs & spices"],
-              ["Whole person", "Body · mind · spirit"],
+              ["Remedies", "Herbs and spices"],
+              ["Prayer", "We pray with you"],
             ].map(([a, b]) => (
               <div key={a}>
                 <p className="font-display text-sm font-semibold text-forest md:text-lg">{a}</p>
