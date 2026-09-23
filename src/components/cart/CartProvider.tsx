@@ -63,7 +63,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }
       return [...prev, { ...item, quantity }];
     });
-    setIsOpen(true);
+    // Desktop: slide the cart open. Phones: stay put; the "View basket" bar updates instead.
+    if (window.matchMedia("(min-width: 768px)").matches) setIsOpen(true);
   }, []);
 
   const setQuantity = useCallback((slug: string, quantity: number) => {

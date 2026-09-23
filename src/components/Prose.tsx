@@ -12,11 +12,11 @@ function inline(text: string) {
 export function Prose({ body }: { body: string }) {
   const blocks = body.trim().split(/\n\s*\n/);
   return (
-    <div className="space-y-5 text-lg leading-relaxed text-ink/80">
+    <div className="space-y-4 text-base leading-relaxed text-ink/80 md:space-y-5 md:text-lg">
       {blocks.map((block, i) => {
         if (block.startsWith("## ")) {
           return (
-            <h2 key={i} className="pt-4 font-display text-2xl font-semibold text-forest">
+            <h2 key={i} className="pt-3 font-display text-xl font-semibold text-forest md:pt-4 md:text-2xl">
               {block.slice(3)}
             </h2>
           );

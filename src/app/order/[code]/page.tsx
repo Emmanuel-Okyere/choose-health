@@ -23,16 +23,16 @@ export default async function OrderPage(props: PageProps<"/order/[code]">) {
 
   return (
     <main className="paper-grain flex-1">
-      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6">
-        <div className="rounded-[2rem] bg-white p-8 text-center shadow-xl ring-1 ring-sand sm:p-12">
+      <div className="mx-auto max-w-2xl px-4 py-5 sm:px-6 md:py-16">
+        <div className="rounded-2xl bg-white p-5 text-center shadow-xl ring-1 ring-sand sm:p-12 md:rounded-[2rem]">
           <CheckCircle2 className="mx-auto h-14 w-14 text-leaf" />
-          <h1 className="mt-4 font-display text-4xl font-semibold text-forest">Medaase, {order.customerName.split(" ")[0]}!</h1>
+          <h1 className="mt-3 font-display text-3xl font-semibold text-forest md:mt-4 md:text-4xl">Medaase, {order.customerName.split(" ")[0]}!</h1>
           <p className="mt-2 text-muted">Your order has been received.</p>
-          <p className="mt-6 inline-block rounded-2xl bg-cream px-6 py-3 font-display text-3xl font-semibold tracking-widest text-forest">
+          <p className="mt-4 inline-block rounded-2xl bg-cream px-5 py-2.5 font-display text-2xl md:mt-6 md:px-6 md:py-3 md:text-3xl font-semibold tracking-widest text-forest">
             {order.code}
           </p>
 
-          <ul className="mt-8 divide-y divide-sand text-left">
+          <ul className="mt-5 divide-y divide-sand text-left text-sm md:mt-8 md:text-base">
             {order.items.map((i) => (
               <li key={i.name} className="flex justify-between py-3">
                 <span>
@@ -48,7 +48,7 @@ export default async function OrderPage(props: PageProps<"/order/[code]">) {
           </ul>
 
           {order.paymentMethod === "momo" && (
-            <div className="mt-8 rounded-2xl bg-forest p-6 text-left text-cream">
+            <div className="mt-5 rounded-2xl bg-forest p-4 text-left text-cream md:mt-8 md:p-6">
               <p className="flex items-center gap-2 font-semibold text-kente">
                 <Smartphone className="h-5 w-5" /> Pay with Mobile Money
               </p>

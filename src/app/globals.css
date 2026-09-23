@@ -19,8 +19,8 @@
 
   --animate-marquee: marquee 38s linear infinite;
   @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
   }
 }
 
@@ -55,7 +55,20 @@ body {
   background-size: 34px 34px, 46px 46px;
 }
 
+/* Ticker: pauses on hover or when tapped (the .paused class is toggled in RestockTicker). */
+.ticker:hover .animate-marquee,
+.ticker.paused .animate-marquee { animation-play-state: paused; }
+
+/* Hide scrollbars on swipeable rows (chips, carousels) while keeping them scrollable. */
+.no-scrollbar { scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Space for the mobile bottom tab bar + iPhone home indicator. */
+.pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .animate-marquee { animation: none; }
+  /* Many phones turn this on (incl. some battery savers). Keep the ticker moving, just slower;
+     it can be paused by tapping it. */
+  .animate-marquee { animation-duration: 90s; }
 }

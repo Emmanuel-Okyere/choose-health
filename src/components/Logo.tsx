@@ -1,4 +1,4 @@
-type Props = { className?: string; showWordmark?: boolean; inverted?: boolean };
+type Props = { className?: string; showWordmark?: boolean; inverted?: boolean; compact?: boolean };
 
 // Mark: a retreat "home" whose doorway is a sprouting leaf — healing that starts at home.
 export function LogoMark({ className = "h-10 w-10" }: { className?: string }) {
@@ -32,14 +32,17 @@ export function LogoMark({ className = "h-10 w-10" }: { className?: string }) {
   );
 }
 
-export function Logo({ className = "", showWordmark = true, inverted = false }: Props) {
+export function Logo({ className = "", showWordmark = true, inverted = false, compact = false }: Props) {
+  // compact: slightly smaller on phones, full size from md up
+  const mark = compact ? "h-8 w-8 md:h-10 md:w-10" : "h-10 w-10";
+  const word = compact ? "text-[1.05rem] md:text-[1.2rem]" : "text-[1.2rem]";
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
-      <LogoMark className={`h-10 w-10 shrink-0 ${inverted ? "text-cream" : "text-forest"}`} />
+      <LogoMark className={`${mark} shrink-0 ${inverted ? "text-cream" : "text-forest"}`} />
       {showWordmark && (
         <span className="flex flex-col leading-none">
           <span
-            className={`font-display text-[1.2rem] font-semibold tracking-tight ${inverted ? "text-cream" : "text-forest"}`}
+            className={`font-display ${word} font-semibold tracking-tight ${inverted ? "text-cream" : "text-forest"}`}
           >
             Natural Health
           </span>

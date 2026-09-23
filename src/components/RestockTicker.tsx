@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { Clock, Flame, Leaf, MapPin, Nut, Sparkle, type LucideIcon } from "lucide-react";
 
 const items: { icon: LucideIcon; text: string }[] = [
@@ -11,12 +14,17 @@ const items: { icon: LucideIcon; text: string }[] = [
 ];
 
 export function RestockTicker() {
+  const [paused, setPaused] = useState(false);
   const row = [...items, ...items];
   return (
-    <div className="overflow-hidden bg-forest py-2.5 text-sm font-medium text-cream" aria-label="Latest news">
-      <div className="flex w-max animate-marquee gap-10 whitespace-nowrap">
+    <div
+      className={`ticker cursor-pointer overflow-hidden bg-forest py-2 text-[13px] font-medium text-cream sm:py-2.5 sm:text-sm ${paused ? "paused" : ""}`}
+      aria-label="Latest news (tap to pause)"
+      onClick={() => setPaused((p) => !p)}
+    >
+      <div className="flex w-max animate-marquee gap-8 whitespace-nowrap will-change-transform sm:gap-10">
         {row.map(({ icon: Icon, text }, i) => (
-          <span key={i} className="flex items-center gap-10" aria-hidden={i >= items.length}>
+          <span key={i} className="flex items-center gap-8 sm:gap-10" aria-hidden={i >= items.length}>
             <span className="flex items-center gap-2">
               <Icon className="h-4 w-4 text-kente" aria-hidden="true" />
               {text}

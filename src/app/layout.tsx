@@ -6,6 +6,7 @@ import { CartDrawer } from "@/components/cart/CartDrawer";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFab } from "@/components/WhatsAppFab";
+import { MobileTabBar } from "@/components/MobileTabBar";
 import { site } from "@/lib/site";
 
 const fraunces = Fraunces({ variable: "--font-fraunces", subsets: ["latin"], style: ["normal", "italic"] });
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = { themeColor: "#173f2a" };
+export const viewport: Viewport = { themeColor: "#173f2a", viewportFit: "cover" };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -39,6 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Footer />
           <CartDrawer />
           <WhatsAppFab />
+          <MobileTabBar />
         </CartProvider>
       </body>
     </html>
