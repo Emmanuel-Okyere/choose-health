@@ -54,3 +54,21 @@ CREATE TABLE IF NOT EXISTS order_items (
 
 CREATE INDEX IF NOT EXISTS order_items_order_id_idx ON order_items(order_id);
 CREATE INDEX IF NOT EXISTS orders_created_at_idx ON orders(created_at DESC);
+
+-- Extra admin accounts. The owner (default super admin) comes from ADMIN_USERNAME /
+-- ADMIN_PASSWORD env vars and is intentionally NOT stored here, so it can never be deleted.
+CREATE TABLE IF NOT EXISTS admin_users (
+  id               serial PRIMARY KEY,
+  username         text UNIQUE NOT NULL CHECK (username = lower(username)),
+  name             text NOT NULL,
+  password_hash    text NOT NULL,
+  role             text NOT NULL DEFAULT 'admin' CHECK (role IN ('super_admin', 'admin')),
+  session_version  integer NOT NULL DEFAULT 1,   -- bumped to sign the user out everywhere
+  created_by       text,
+  created_at       timestamptz NOT NULL DEFAULT now()
+);
+
+-- Who last changed an order's status, and when (added after launch; safe to re-run).
+ALTER TABLE orders ADD COLUMN IF NOT EXISTS status_updated_at timestamptz;
+ALTER TABLE orders ADD COLUMN IF NOT EXISTS status_updated_by text;
+CREATE INDEX IF NOT EXISTS orders_status_idx ON orders(status);

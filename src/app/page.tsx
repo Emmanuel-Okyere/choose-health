@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BadgeCheck, Clock, HandHeart, Leaf, MapPin, Phone, Smartphone, Truck } from "lucide-react";
+import { ArrowRight, BadgeCheck, Clock, Flame, HandHeart, Leaf, MapPin, Phone, Smartphone, Truck } from "lucide-react";
 import { RestockTicker } from "@/components/RestockTicker";
 import { ProductCatalog } from "@/components/ProductCatalog";
 import { WhatsAppIcon } from "@/components/WhatsAppFab";
@@ -145,7 +145,9 @@ function Hero() {
             <p className="font-display text-lg font-semibold text-forest">{site.doctor.name}</p>
           </div>
           <div className="absolute -right-3 top-10 rotate-3 rounded-2xl bg-cayenne px-4 py-3 text-white shadow-xl sm:-right-8">
-            <p className="font-display text-lg font-semibold leading-tight">RESTOCKED! 🔥</p>
+            <p className="flex items-center gap-1.5 font-display text-lg font-semibold leading-tight">
+              RESTOCKED! <Flame className="h-5 w-5 fill-kente text-kente" aria-hidden="true" />
+            </p>
             <p className="text-xs text-white/85">Cayenne · Turmeric · Charcoal</p>
           </div>
           <div className="absolute -bottom-5 right-6 flex items-center gap-2 rounded-full bg-forest px-4 py-2 text-sm text-cream shadow-lg">

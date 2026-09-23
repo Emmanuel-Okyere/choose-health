@@ -1,20 +1,20 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { SESSION_COOKIE, readSessionToken } from "@/lib/auth";
 
-// HTTP Basic auth for the admin dashboard (username "admin", password from ADMIN_PASSWORD).
-export function proxy(request: NextRequest) {
-  const password = process.env.ADMIN_PASSWORD;
-  const header = request.headers.get("authorization") ?? "";
-  const [scheme, encoded] = header.split(" ");
+// Sends signed-out visitors to the admin login page (and signed-in ones away from it).
+export async function proxy(request: NextRequest) {
+  const { pathname, search } = request.nextUrl;
+  const loggedIn = !!(await readSessionToken(request.cookies.get(SESSION_COOKIE)?.value));
 
-  if (password && scheme === "Basic" && encoded) {
-    const [user, ...rest] = atob(encoded).split(":");
-    if (user === "admin" && rest.join(":") === password) return NextResponse.next();
+  if (pathname === "/admin/login") {
+    return loggedIn ? NextResponse.redirect(new URL("/admin", request.url)) : NextResponse.next();
   }
-
-  return new NextResponse("Authentication required", {
-    status: 401,
-    headers: { "WWW-Authenticate": 'Basic realm="Natural Health admin"' },
-  });
+  if (!loggedIn) {
+    const url = new URL("/admin/login", request.url);
+    url.searchParams.set("next", pathname + search);
+    return NextResponse.redirect(url);
+  }
+  return NextResponse.next();
 }
 
-export const config = { matcher: ["/admin/:path*"] };
+export const config = { matcher: ["/admin", "/admin/:path*"] };

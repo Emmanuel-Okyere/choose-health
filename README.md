@@ -8,7 +8,7 @@ One-page shop + remedies journal for the Natural Health Retreat Reform Center (N
 - **Postgres 16** via [`postgres`](https://github.com/porsager/postgres) — raw SQL, no ORM
 - Cart in the browser (localStorage) → orders saved to Postgres through a server action, with prices always re-read from the DB
 - Mobile Money / cash payment instructions, WhatsApp handoff at every step
-- `/admin` order dashboard behind HTTP Basic auth (`admin` / `ADMIN_PASSWORD`)
+- `/admin` dashboard (orders + team) with a sign-in page at `/admin/login` — see **Admin accounts** below
 
 ## Getting started
 
@@ -20,11 +20,23 @@ npm run db:setup             # applies db/schema.sql and seeds products + articl
 npm run dev
 ```
 
+## Admin accounts
+
+| Role | Who | Can |
+| --- | --- | --- |
+| **Owner** (default super admin) | `ADMIN_USERNAME` (default `admin`) / `ADMIN_PASSWORD` env vars | Everything. Not stored in the DB, so it can never be deleted. |
+| **Super admin** | Added on *Admin → Team* | Manage orders; add, promote/demote, reset passwords of and remove other members (not the owner, not themselves). |
+| **Admin** | Added on *Admin → Team* | Manage orders and change their own password. Cannot add, edit or remove anyone. |
+
+- Passwords are hashed with scrypt. Sessions are signed HttpOnly cookies valid for 12 hours.
+- Removing a member or resetting their password signs them out immediately; role changes apply on their next click.
+- Set `AUTH_SECRET` (e.g. `openssl rand -base64 32`) in production. Without it, sessions are signed with `ADMIN_PASSWORD`, so changing that password signs every admin out.
+
 ## Deploying to Vercel
 
 1. **Create a database:** Vercel project → *Storage* → *Create Database* → **Neon (Postgres)**. This sets `DATABASE_URL` for you.
    (Any Postgres works, e.g. Supabase — paste its *pooled* connection string as `DATABASE_URL`.)
-2. **Add `ADMIN_PASSWORD`** under *Settings → Environment Variables* (use a strong one).
+2. **Add `ADMIN_USERNAME`, `ADMIN_PASSWORD` and `AUTH_SECRET`** under *Settings → Environment Variables* (use strong values).
 3. **If the repo root is the parent folder**, set *Settings → Build & Deployment → Root Directory* to `choose-health`.
 4. **Deploy.** No `.env` file is needed — Vercel injects the variables.
 
@@ -48,7 +60,9 @@ Locally, `npm run db:seed` (without `--if-empty`) still resets the seed products
 | Database schema | `db/schema.sql` |
 | Home page sections | `src/app/page.tsx` |
 | Checkout + order server action | `src/app/checkout/` |
-| Order dashboard | `src/app/admin/` (auth in `src/proxy.ts`) |
+| Orders list, filters & detail | `src/app/admin/(dashboard)/page.tsx`, `orders/[code]/`, queries in `src/lib/admin-orders.ts` |
+| Excel export | `src/app/admin/(dashboard)/orders/export/route.ts` (uses the same filters as the list) |
+| Order dashboard & login | `src/app/admin/` (session logic in `src/lib/auth.ts`, redirects in `src/proxy.ts`) |
 | Logo | `src/components/Logo.tsx`, `src/app/icon.svg` |
 
 ## Before launch — needs owner input

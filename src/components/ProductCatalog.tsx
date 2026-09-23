@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Plus } from "lucide-react";
+import { Check, Flame, Nut, Plus } from "lucide-react";
 import { useCart } from "./cart/CartProvider";
 import { ProductImage } from "./ProductImage";
 import { cedis } from "@/lib/format";
@@ -72,11 +72,16 @@ function ProductCard({ product: p }: { product: Product }) {
         <ProductImage src={p.image} name={p.name} category={p.category} className="aspect-[4/3] w-full" sizes="(max-width: 640px) 100vw, 25vw" />
         {p.badge && (
           <span
-            className={`absolute left-3 top-3 rounded-full px-2.5 py-1 text-[0.7rem] font-bold uppercase tracking-wider ${
+            className={`absolute left-3 top-3 flex items-center gap-1 rounded-full px-2.5 py-1 text-[0.7rem] font-bold uppercase tracking-wider ${
               p.badge === "Restocked" ? "bg-cayenne text-white" : "bg-kente text-forest-deep"
             }`}
           >
-            {p.badge === "Restocked" ? "🔥 Restocked" : p.badge}
+            {p.badge === "Restocked" ? (
+              <Flame className="h-3.5 w-3.5" aria-hidden="true" />
+            ) : p.wholesale ? (
+              <Nut className="h-3.5 w-3.5" aria-hidden="true" />
+            ) : null}
+            {p.badge}
           </span>
         )}
       </div>

@@ -3,7 +3,7 @@ import { whatsappLink } from "@/lib/site";
 export function WhatsAppFab() {
   return (
     <a
-      href={whatsappLink("Hello Natural Health Retreat 👋")}
+      href={whatsappLink("Hello Natural Health Retreat, I have a question.")}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"
