@@ -42,7 +42,7 @@ export function ProductCatalog({ products }: { products: Product[] }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2 min-[360px]:gap-3 sm:gap-5 lg:grid-cols-4">
         {visible.map((p) => (
           <ProductCard key={p.slug} product={p} />
         ))}
@@ -94,19 +94,19 @@ function ProductCard({ product: p }: { product: Product }) {
           </span>
         )}
       </div>
-      <div className="flex flex-1 flex-col p-3 sm:p-5">
+      <div className="flex flex-1 flex-col p-2.5 min-[360px]:p-3 sm:p-5">
         <p className="truncate text-[10px] font-semibold uppercase tracking-widest text-leaf-dark sm:text-xs">
           {[p.brand, p.size].filter(Boolean).join(" · ")}
         </p>
         <h3 className="mt-0.5 font-display text-[15px] font-semibold leading-snug text-forest sm:mt-1 sm:text-xl">{p.name}</h3>
         <p className="mt-2 hidden text-sm leading-relaxed text-muted sm:line-clamp-3">{p.description}</p>
-        <div className="mt-auto flex items-center justify-between gap-2 pt-2 sm:pt-5">
-          <span className="whitespace-nowrap font-display text-base font-semibold sm:text-xl">{cedis(p.pricePesewas)}</span>
+        <div className="mt-auto flex items-center justify-between gap-1.5 pt-2 min-[360px]:gap-2 sm:pt-5 lg:flex-col lg:items-stretch lg:gap-3">
+          <span className="whitespace-nowrap font-display text-[15px] font-semibold min-[360px]:text-base sm:text-xl">{cedis(p.pricePesewas)}</span>
           <button
             onClick={handleAdd}
             disabled={!p.inStock}
             aria-label={p.inStock ? `Add ${p.name} to cart` : `${p.name} is sold out`}
-            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold transition active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 sm:h-auto sm:w-auto sm:gap-1.5 sm:px-4 sm:py-2 ${
+            className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-semibold transition active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 min-[360px]:h-9 min-[360px]:w-9 sm:h-auto sm:w-auto sm:gap-1.5 sm:px-4 sm:py-2 lg:w-full lg:py-2.5 ${
               added ? "bg-leaf text-white" : "bg-forest text-cream hover:bg-forest-deep"
             }`}
           >
